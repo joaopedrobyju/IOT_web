@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semáforo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/semaforo.css') }}">
+    <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Monitoramento Semáforo</h1>
+        <br/><br/>
+        <div class="row">
+    
+            <div class="col">
+                <div class="led" id="led-verde-ligado" style="display: none;">
+                    <div class="cabeca green green-light"></div>
+                    <div class="base green green-light"></div>
+                    <div class="pernas">
+                        <div class="perna"></div>
+                        <div class="perna curta"></div>
+                    </div>
+                </div>
+    
+                <div class="led" id="led-verde-desligado">
+                    <div class="cabeca cyan cyan-light"></div>
+                    <div class="base cyan cyan-light"></div>
+    
+                    <div class="pernas">
+                        <div class="perna"></div>
+                        <div class="perna curta"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="led" id="led-amarelo-ligado" style="display: none;">
+                    <div class="cabeca yellow yellow-light"></div>
+                    <div class="base yellow yellow-light"></div>
+                    <div class="pernas">
+                        <div class="perna"></div>
+                        <div class="perna curta"></div>
+                    </div>
+                </div>
+    
+                <div class="led" id="led-amarelo-desligado">
+                    <div class="cabeca cyan cyan-light"></div>
+                    <div class="base cyan cyan-light"></div>
+    
+                    <div class="pernas">
+                        <div class="perna"></div>
+                        <div class="perna curta"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="led" id="led-vermelho-ligado" style="display: none;">
+                    <div class="cabeca red red-light"></div>
+                    <div class="base red red-light"></div>
+    
+                    <div class="pernas">
+                        <div class="perna"></div>
+                        <div class="perna curta"></div>
+                    </div>
+                </div>
+    
+                <div class="led" id="led-vermelho-desligado">
+                    <div class="cabeca cyan cyan-light"></div>
+                    <div class="base cyan cyan-light"></div>
+    
+                    <div class="pernas">
+                        <div class="perna"></div>
+                        <div class="perna curta"></div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+</body>
+<script>
+
+    const socket = io();
+
+    socket.on("status_semaforo", function(data) {
+        
+        if(data.status == "ligado") {
+            ligarSemaforo()
+        } else if(data.status == "desligado") {
+            desligarSemaforo()
+        } else if(data.status == "ligarVerde"){
+            ligarVerde()            
+        } else if(data.status == "desligarVerde"){
+            desligarVerde()            
+        } else if(data.status == "ligarVermelho"){
+            ligarVermelho()         
+        } else if(data.status == "desligarVermelho"){
+            desligarVermelho()            
+        } else if(data.status == "ligarAmarelo"){
+            ligarAmarelo()            
+        } else if (data.status == "desligarAmarelo"){
+            desligarAmarelo()            
+        }
+
+    });
+
+function ligarSemaforo(){
+    $("#led-verde-ligado").show()
+    $("#led-verde-desligado").hide()
+
+    $("#led-vermelho-ligado").show()
+    $("#led-vermelho-desligado").hide()
+
+    $("#led-amarelo-ligado").show()
+    $("#led-amarelo-desligado").hide()
+}
+
+function desligarSemaforo(){
+    $("#led-verde-ligado").hide()
+    $("#led-verde-desligado").show()
+
+    $("#led-vermelho-ligado").hide()
+    $("#led-vermelho-desligado").show()
+
+    $("#led-amarelo-ligado").hide()
+    $("#led-amarelo-desligado").show()
+}
+
+function ligarVerde(){
+    $("#led-verde-ligado").show()
+    $("#led-verde-desligado").hide()
+}
+
+function desligarVerde(){
+    $("#led-verde-ligado").hide()
+    $("#led-verde-desligado").show()
+}
+
+function ligarVermelho(){
+    $("#led-vermelho-ligado").show()
+    $("#led-vermelho-desligado").hide()
+}
+
+function desligarVermelho(){
+    $("#led-vermelho-ligado").hide()
+    $("#led-vermelho-desligado").show()
+}
+
+function ligarAmarelo(){
+    $("#led-amarelo-ligado").show()
+    $("#led-amarelo-desligado").hide()
+}
+
+function desligarAmarelo(){
+    $("#led-amarelo-ligado").hide()
+    $("#led-amarelo-desligado").show()
+}
+
+</script>
+</html>
+
+<!-- Primeiro cmd - venv\Scripts\activite -->
+<!-- Segundo cmd - python main.py -->
